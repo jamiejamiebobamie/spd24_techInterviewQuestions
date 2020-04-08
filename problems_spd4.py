@@ -81,6 +81,23 @@ class BTree:
         node = self.root
         return recur(node)
 
+    def find_superbalanced(self):
+        def recur(node, count):
+            if not node.left and not node.right:
+                counts.append(count)
+            else:
+                if node.right:
+                    recur(node.right, count+1)
+                if node.left:
+                    recur(node.left, count+1)
+        counts = []
+        node = self.root
+        recur(node, 0)
+
+        min_count = min(counts)
+        max_count = max(counts)
+        return max_count - min_count < 2
+
 
 # 'red', 'orange', 'yellow', 'green', 'blue', 'purple'
 
@@ -167,14 +184,14 @@ simplification:
 """
 
 # [1,0,2,3,-1]
-myTree = BTree()
-myTree.add(1)
-myTree.add(0)
-myTree.add(2)
-myTree.add(3)
-myTree.add(-1)
-print(myTree.inorder_traversal())
-print(myTree.find_nodes_that_sum(5))
+# myTree = BTree()
+# myTree.add(1)
+# myTree.add(0)
+# myTree.add(2)
+# myTree.add(3)
+# myTree.add(-1)
+# print(myTree.inorder_traversal())
+# print(myTree.find_nodes_that_sum(5))
 # There's seems to be some issues... it doesn't work for all sums...
 
 
@@ -197,6 +214,16 @@ once every leaf has pushed its count to the array
 
 we get the min and max counts from the array and if their difference is greater
 than one then the tree is not superbalanced.
-
-
 """
+
+
+myTree = BTree()
+myTree.add(1)
+myTree.add(0)
+myTree.add(2)
+myTree.add(3)
+myTree.add(-1)
+print(myTree.find_superbalanced()) # True
+myTree.add(-3)
+myTree.add(-2)
+print(myTree.find_superbalanced()) # False
