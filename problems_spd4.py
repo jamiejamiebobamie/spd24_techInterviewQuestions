@@ -98,6 +98,24 @@ class BTree:
         max_count = max(counts)
         return max_count - min_count < 2
 
+    def turn_into_sorted_LL(self):
+        def recur(node, last):
+            if node.left:
+                recur(node.left, node)
+                if last:
+                    node.left = last
+            if node.right:
+                recur(node.right, node)
+                if last:
+                    node.right = last
+
+                # recur(node.right, node)
+                # if last:
+                #     node.right = last
+
+        node = self.root
+        recur(node, None)
+
 
 # 'red', 'orange', 'yellow', 'green', 'blue', 'purple'
 
@@ -217,13 +235,66 @@ than one then the tree is not superbalanced.
 """
 
 
+# myTree = BTree()
+# myTree.add(1)
+# myTree.add(0)
+# myTree.add(2)
+# myTree.add(3)
+# myTree.add(-1)
+# print(myTree.find_superbalanced()) # True
+# myTree.add(-3)
+# myTree.add(-2)
+# print(myTree.find_superbalanced()) # False
+
+"""
+New: Given a binary search tree, convert it into a sorted doubly-linked list by
+modifying the original tree nodes (do not create new nodes).
+
+
+ideas:
+
+to get the values from a bst in ascending order you use inorder traversal
+as we do the inorder traversal we need to update the left and right pointers
+to become previous (left) and next (right) pointers.
+
+inorder traversal is:
+left
+node.data
+right
+
+SIMPLIFICATION: attempt on a very basic bst.
+
+
+            2
+        1       3
+
+we need to keep a pointer to the parent node as we traverse
+
+store parent (2)
+go from 2 to 1
+set 1's.right pointer to it's parent
+2's pointers are correct
+store parent (2)
+recurse down to 3
+set 3's.left pointer to it's parent
+"""
+
+
 myTree = BTree()
-myTree.add(1)
-myTree.add(0)
-myTree.add(2)
-myTree.add(3)
-myTree.add(-1)
-print(myTree.find_superbalanced()) # True
-myTree.add(-3)
-myTree.add(-2)
-print(myTree.find_superbalanced()) # False
+myTree.add(5)
+myTree.add(7)
+myTree.add(4)
+myTree.add(6)
+"""
+HAVE:
+                5
+            4       7
+                  6
+WANT:
+        5
+    4       6
+                7
+"""
+print(myTree.inorder_traversal())
+myTree.turn_into_sorted_LL() # doesn't work...
+print(myTree.root.right.data)
