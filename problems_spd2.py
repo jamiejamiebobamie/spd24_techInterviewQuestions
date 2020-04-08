@@ -48,14 +48,15 @@ Make letter matching case sensitive at first, then later make matching case
 insensitive.
 Generate more simplifications and add them here!"""
 
+# a max/min heap would be really helpful to know how to use right about now...
 
 # Example execution:
 handles = ['DogeCoin', 'YangGang2020', 'HodlForLife', 'fakeDonaldDrumpf', 'GodIsLove', 'BernieOrBust']
 # suggest('iLoveDogs', handles, k=2)   should return   ['GodIsLove', 'DogeCoin']
 
 """SIMPLIFICATION #1"""
-# a max/min heap would be really helpful to know how to use right about now...
-def find_closest_handle(user_handle, handles_array, k):
+# i solve it by finding the closest
+def find_closest_handle(user_handle, handles_array):
     """Finds the closest handle to the user."""
 
     user_handle_chars = set()
@@ -78,46 +79,85 @@ def find_closest_handle(user_handle, handles_array, k):
 
     return max_handle
 
-# print(find_closest_handle('iLoveDogs', handles, None))
+print(find_closest_handle('iLoveDogs', handles))
 
-# jumping in was the wrong move... some edge cases were not considered.
 handles = ['DogeCoin', 'YangGang2020', 'HodlForLife', 'fakeDonaldDrumpf', 'GodIsLove', 'BernieOrBust']
 
-"""I did one simplification and felt ready to solve it..."""
+"""SIMPLIFICATION #2"""
+# if k > handles_array, i return it without worrying about who the closest names are.
 def find_closest_handles(user_handle, handles_array, k):
     """Finds the closest handles (k) to the user's handle."""
 
-    def iterate_over_max_array_and_test_candidate(candidate):
-        min_value = float('inf')
-        test_handle, test_score = candidate
-        if len(max_handle_scores) < k:
-            max_handle_scores[test_handle] = test_score
-        else:
-            min_in_dict = min(max_handle_scores.keys())
-            min_so_far = min(min_in_dict, test_score)
-            # print(min_in_dict)
-            if min_so_far == min_in_dict:
-                print(min_in_dict, min_so_far == min_in_dict)
-                del min_in_dict
-                # print(min_in_dict in max_handle_scores)
-                max_handle_scores[test_score] = test_handle
+    result = []
+
+    if k > len(handles_array):
+        return handles_array
 
     user_handle_chars = set()
     for char in user_handle:
         user_handle_chars.add(char)
 
-    max_handle_scores = {}
+    handle_scores_dict = {}
     for handle in handles_array:
         score = 0
         for char in handle:
             if char in user_handle_chars:
-                score+=1
+                score += 1
             else:
-                score-=1
+                score -= 1
 
-        test_handle_score = (handle,score)
-        iterate_over_max_array_and_test_candidate(test_handle_score)
+        if score not in handle_scores_dict:
+            handle_scores_dict[score] = [handle]
+        else:
+            handle_scores_dict[score].append(handle)
 
-    return list(max_handle_scores.values())
+    while len(result) < k:
+        max_key = max(handle_scores_dict.keys())
+        max_key_handles = handle_scores_dict[max_key]
+        i = 0;
+        while len(result) < k and i < len(max_key_handles):
+            handle = max_key_handles[i]
+            result.append(handle)
+            i += 1
+        del handle_scores_dict[max_key]
+    return result
 
-print(find_closest_handles('iLoveDogs', handles, 2))
+print(find_closest_handles('iLoveDogs', handles, 3))
+
+
+"""SOLVING IT!!"""
+def find_closest_handles_yay(user_handle, handles_array, k):
+    """Finds the closest handles (k) to the user's handle."""
+
+    result = []
+
+    user_handle_chars = set()
+    for char in user_handle:
+        user_handle_chars.add(char)
+
+    handle_scores_dict = {}
+    for handle in handles_array:
+        score = 0
+        for char in handle:
+            if char in user_handle_chars:
+                score += 1
+            else:
+                score -= 1
+
+        if score not in handle_scores_dict:
+            handle_scores_dict[score] = [handle]
+        else:
+            handle_scores_dict[score].append(handle)
+
+    while len(result) < k and len(handle_scores_dict) != 0:
+        max_key = max(handle_scores_dict.keys())
+        max_key_handles = handle_scores_dict[max_key]
+        i = 0;
+        while len(result) < k and i < len(max_key_handles):
+            handle = max_key_handles[i]
+            result.append(handle)
+            i += 1
+        del handle_scores_dict[max_key]
+    return result
+
+print(find_closest_handles_yay('iLoveDogs', handles, 10))
