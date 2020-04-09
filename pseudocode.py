@@ -3,7 +3,7 @@
 # a = [5,1,3,6,8,2,4,7], k=3 => [6,8,7]
 
 
-def find_k_largest(a,k):
+# def find_k_largest(a,k):
     # return the array if k is larger than the length of the array
     # initialize an empty array called 'result'
     # intialize a variable called 'minimum' and set its value to the first item in a
