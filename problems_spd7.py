@@ -261,11 +261,11 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 """
 
 def max_profit(array):
-    def compute_diff(buy, sell):
+    def compute_profit(buy, sell):
         return sell - buy
     # the buy must be before the sell (have a lower index)
-    minimum_buy = 0
-    min_buy_index = -1
+    minimum_buy = float('inf')
+    min_buy_index = 0
 
     # the sell must be after the buy (have a higher index)
     maximum_sell = 0
@@ -274,14 +274,16 @@ def max_profit(array):
     # maximum profit = maximum_sell - minimum_buy
     for i, stock_price in enumerate(array):
         # adjust buy
-        if compute_diff(minimum_buy,maximum_sell) < compute_diff(stock_price, maximum_sell) and i < max_sell_index:
+        if compute_profit(minimum_buy,maximum_sell) < compute_profit(stock_price, maximum_sell) and i < max_sell_index:
             minimum_buy = stock_price
             min_buy_index = i
         # adjust sell
-        if compute_diff(minimum_buy,maximum_sell) < compute_diff(minimum_buy, stock_price) and i > min_buy_index:
+        if compute_profit(minimum_buy,maximum_sell) < compute_profit(minimum_buy, stock_price) and i > min_buy_index:
             maximum_sell = stock_price
             max_sell_index = i
+        # print(compute_profit(minimum_buy, maximum_sell), minimum_buy, maximum_sell)
 
-    return compute_diff(minimum_buy,maximum_sell)
+    profit = compute_profit(minimum_buy, maximum_sell)
+    return profit if profit > 0 else 0
 
-print(max_profit([7,1,5,3,6,4]))
+print(max_profit([7,6,4,3,1]))
