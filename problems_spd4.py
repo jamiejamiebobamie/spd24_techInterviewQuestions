@@ -98,6 +98,7 @@ class BTree:
         max_count = max(counts)
         return max_count - min_count < 2
 
+    # doesn't work
     def turn_into_sorted_LL(self):
         def recur(node, last):
             if node.left:
@@ -115,6 +116,15 @@ class BTree:
 
         node = self.root
         recur(node, None)
+
+    # doesn't work
+    def is_symmetrical(self):
+        def recur(node):
+            if node:
+                return recur(node.left) and recur(node.right)
+
+        return recur(root.left) and recur(root.right)
+
 
 
 # 'red', 'orange', 'yellow', 'green', 'blue', 'purple'
@@ -202,15 +212,16 @@ simplification:
 """
 
 # [1,0,2,3,-1]
-# myTree = BTree()
-# myTree.add(1)
-# myTree.add(0)
-# myTree.add(2)
-# myTree.add(3)
-# myTree.add(-1)
-# print(myTree.inorder_traversal())
+myTree = BTree()
+myTree.add(1)
+myTree.add(0)
+myTree.add(2)
+myTree.add(3)
+myTree.add(-1)
+print(myTree.inorder_traversal())
 # print(myTree.find_nodes_that_sum(5))
 # There's seems to be some issues... it doesn't work for all sums...
+print(myTree.is_symmetrical)
 
 
 """
