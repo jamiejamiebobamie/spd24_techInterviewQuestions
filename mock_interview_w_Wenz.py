@@ -39,21 +39,21 @@ def interleave(array):
     second_half = sorted_array[end_index:]
 
     result = []
-    j,k = 0,0
-    for i, item in enumerate(sorted_array):
-        if j+k < len(sorted_array):
-            if i % 2: # odd
-                result.append(second_half[k])
-                k+=1
-            else:
-                result.append(first_half[j])
-                j+=1
+    i,j,k = 0,0,0
+    while i < len(sorted_array):
+        if i % 2: # odd
+            result.append(second_half[k])
+            k+=1
+        else:
+            result.append(first_half[j])
+            j+=1
+        i+=1
     return result
 
 array = [6, 9, 2, 5, 1, 4]
 array = [9, 6, 8, 3, 7]
 array = [1, 2, 3, 4, 5, 6, 7]
-# print(interleave(array)) # [3, 8, 6, 9, 7]
+print(interleave(array)) # [3, 8, 6, 9, 7]
 
 # in-place
 # O(n)
@@ -78,4 +78,11 @@ def interleave1(a):
     print(count)
     return a
 
-print(interleave1(array))
+# print(interleave1(array))
+
+"""UMPIRE METHOD OF PROBLEM SOLVING:
+Understand what the interviewer is asking for by using test cases and questions about the problem. 
+Match what this problem looks like to known categories of problems, e.g. Linked List or Dynamic Programming and strategies or patterns in those categories. 
+Plan the solution with appropriate visualizations and pseudocode.
+ Implement the code to solve the algorithm. Review the code by running specific example(s) and recording values (watchlist) of your code's variables along the way. 
+Evaluate the performance of your algorithm and state any strong/weak or future potential work."""
