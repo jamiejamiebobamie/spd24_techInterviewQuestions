@@ -69,9 +69,9 @@ def find_closest_handle(user_handle, handles_array):
         score = 0
         for char in handle:
             if char in user_handle_chars:
-                score+=1
+                score += 1
             else:
-                score-=1
+                score -= 1
         temp = max_score
         max_score = max(score,max_score)
         if temp != max_score:
@@ -123,6 +123,7 @@ def find_closest_handles(user_handle, handles_array, k):
     return result
 
 print(find_closest_handles('iLoveDogs', handles, 3))
+print(find_closest_handles('iLoveDogs', handles, 10))
 
 
 """SOLVING IT!!"""
