@@ -122,11 +122,13 @@ myLL.add(LLNode('e'))
     45123   #3 iteration
 """
 
-# myLL.print_list()
-# myLL.rotate_counter_clockwise(3)
-# print()
-# myLL.print_list()
-# print()
+myLL.print_list()
+myLL.rotate_counter_clockwise(3)
+print()
+myLL.print_list()
+print()
+
+
 
 
 # Given a singly-linked list, find the middle value in the list.
@@ -166,5 +168,5 @@ rearranged so the list becomes A → C → E → G → B → D → F → H.
 # A → B → C → D → E → F → G → H
 # A → C → E → G → B → D → F → H
 
-myLL.print_list()
-myLL.interleave()
+# myLL.print_list()
+# myLL.interleave()

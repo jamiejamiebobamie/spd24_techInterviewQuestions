@@ -53,6 +53,20 @@ class BTree:
         recur(node)
         return tree_data
 
+    def inorder_traversal_node(self):
+        def recur(node):
+            if node:
+                recur(node.left)
+                tree_data.append(node)
+                recur(node.right)
+            return tree_data
+
+        # left,root,right
+        tree_data = []
+        node = self.root
+        recur(node)
+        return tree_data
+
     def find_nodes_that_sum(self, n):
         def recur(node):
             if node:
@@ -98,30 +112,28 @@ class BTree:
         max_count = max(counts)
         return max_count - min_count < 2
 
-    # doesn't work
     def turn_into_sorted_LL(self):
-        def recur(node, last):
-            if node.left:
-                recur(node.left, node)
-                if last:
-                    node.left = last
-            if node.right:
-                recur(node.right, node)
-                if last:
-                    node.right = last
+        # not in place!
+        sorted_nodes_array = self.inorder_traversal_node()
+        for i, node in enumerate(sorted_nodes_array):
+            if i == 0:
+                node.left = None
+                node.right = sorted_nodes_array[i+1]
+            elif i == len(sorted_nodes_array)-1:
+                node.left = sorted_nodes_array[i-1]
+                node.right = None
+            else:
+                node.left = sorted_nodes_array[i-1]
+                node.right = sorted_nodes_array[i+1]
 
-                # recur(node.right, node)
-                # if last:
-                #     node.right = last
-
-        node = self.root
-        recur(node, None)
+        return sorted_nodes_array[0]
 
     # doesn't work
     def is_symmetrical(self):
         def recur(node):
             if node:
                 return recur(node.left) and recur(node.right)
+
 
         return recur(root.left) and recur(root.right)
 
@@ -218,10 +230,10 @@ myTree.add(0)
 myTree.add(2)
 myTree.add(3)
 myTree.add(-1)
-print(myTree.inorder_traversal())
+# print(myTree.inorder_traversal())
 # print(myTree.find_nodes_that_sum(5))
 # There's seems to be some issues... it doesn't work for all sums...
-print(myTree.is_symmetrical)
+# print(myTree.is_symmetrical)
 
 
 """
@@ -306,6 +318,25 @@ WANT:
     4       6
                 7
 """
+# print(myTree.inorder_traversal())
+# myTree.turn_into_sorted_LL() # doesn't work...
+# print(myTree.root.right.data)
+
+
+myTree = BTree()
+myTree.add('red')
+# print(myTree.inorder_traversal())
+myTree.add('orange')
+# print(myTree.inorder_traversal())
+myTree.add('yellow')
+myTree.add('green')
+myTree.add('blue')
+myTree.add('purple')
 print(myTree.inorder_traversal())
-myTree.turn_into_sorted_LL() # doesn't work...
-print(myTree.root.right.data)
+
+head = myTree.turn_into_sorted_LL()
+
+node = head
+while node:
+    print(node.data)
+    node = node.right
