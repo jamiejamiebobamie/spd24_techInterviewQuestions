@@ -54,3 +54,77 @@ def city_rain(array):
         if max_v != temp and i != 0:
 
             run = [max_v]
+
+
+"""
+[4, 2, 3] => 1,
+
+[]
+[]W []
+[][][]
+[][][]
+
+[3, 5, 2, 3, 4] => 3
+
+  []
+  []W  W[]
+[][]W [][]
+[][][][][]
+[][][][][]
+
+when does pooling occur?
+
+needs to be a deficit of 3<=
+2 higher ends with 1 or more lower numbers
+pool = lowest, not highest
+
+two ends = the lowest number is the one that matters
+depth of pool = the height of the lowest end / high point - the height of the current column
+
+ends (two number)
+the lowest end
+height of the column as we iterate (for pools/dips)
+
+
+iterate through the array
+if number1 > number2:
+store number1 as a key in dict
+
+if number is greater than or equal to that key or if we've reached the end of the array
+iterate through values and find max value that is the lower tower
+iterate through the values of that key and compute score based on max value in the value
+
+if we find number is less than or key
+store number as value
+
+"""
+def city_rain(array):
+    max_v = float("-inf")
+    run = {}
+    total_water = 0
+    for i, num in enumerate(array):
+        if i == 0:
+            max_v = num
+        else:
+            if max_v >= num:
+                if max_v in run:
+                    run[max_v].append(num)
+                else:
+                    run[max_v] = [max_v]
+            else:
+                lower_tower = max(run[max_v])
+                for pool_section in run[max_v]:
+                    total_water += lower_tower - pool_section
+                max_v = num
+                run = {}
+                run[max_v] = [max_v]
+                print(max_v)
+    lower_tower = max(run[max_v])
+    for pool_section in run[max_v]:
+        total_water += lower_tower - pool_section
+
+    return total_water
+
+array = [4, 2, 3]
+array = [3, 5, 2, 3, 4]
+print(city_rain(array))
