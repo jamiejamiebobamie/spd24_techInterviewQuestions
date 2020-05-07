@@ -135,7 +135,6 @@ class BTree:
             if node:
                 return recur(node.left) and recur(node.right)
 
-
         return recur(root.left) and recur(root.right)
 
     # Given a binary tree containing numbers, find the maximum sum path

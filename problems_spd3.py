@@ -104,13 +104,13 @@ class LLNode:
         self.data = data
         self.next = next
 
-myLL = LL()
-head = LLNode('a')
-myLL.head, myLL.tail = head, head
-myLL.add(LLNode('b'))
-myLL.add(LLNode('c'))
-myLL.add(LLNode('d'))
-myLL.add(LLNode('e'))
+# myLL = LL()
+# head = LLNode('a')
+# myLL.head, myLL.tail = head, head
+# myLL.add(LLNode('b'))
+# myLL.add(LLNode('c'))
+# myLL.add(LLNode('d'))
+# myLL.add(LLNode('e'))
 
 # Rotate a given linked list counter-clockwise by k nodes, where k is a given integer.
 """
@@ -122,14 +122,11 @@ myLL.add(LLNode('e'))
     45123   #3 iteration
 """
 
-myLL.print_list()
-myLL.rotate_counter_clockwise(3)
-print()
-myLL.print_list()
-print()
-
-
-
+# myLL.print_list()
+# myLL.rotate_counter_clockwise(3)
+# print()
+# myLL.print_list()
+# print()
 
 # Given a singly-linked list, find the middle value in the list.
 
@@ -170,3 +167,77 @@ rearranged so the list becomes A → C → E → G → B → D → F → H.
 
 # myLL.print_list()
 # myLL.interleave()
+
+
+# myLL = LL()
+# head = LLNode('a')
+# myLL.head, myLL.tail = head, head
+# myLL.add(LLNode('g'))
+# myLL.add(LLNode('c'))
+# myLL.add(LLNode('i'))
+# myLL.add(LLNode('e'))
+#
+# myLL2 = LL()
+# head2 = LLNode('f')
+# myLL2.head, myLL.tail = head2, head2
+# myLL2.add(LLNode('b'))
+# myLL2.add(LLNode('h'))
+# myLL2.add(LLNode('d'))
+# myLL2.add(LLNode('j'))
+
+
+"""
+Given an array of k singly-linked lists, each of whose values are
+in sorted order, combine all nodes (do not create new nodes)
+into one singly-linked list with all values in order.
+"""
+
+odd = LL()
+odd_head = LLNode(1)
+odd.head, odd.tail = odd_head, odd_head
+odd.add(LLNode(3))
+odd.add(LLNode(5))
+odd.add(LLNode(7))
+odd.add(LLNode(9))
+
+even = LL()
+even_head = LLNode(2)
+even.head, even.tail = even_head, even_head
+even.add(LLNode(4))
+even.add(LLNode(6))
+even.add(LLNode(8))
+even.add(LLNode(10))
+
+def combineLL(LL1, LL2):
+
+    if LL1.head.data < LL2.head.data:
+        listToAdd = LL1
+        listToTakeFrom = LL2
+    else:
+        listToAdd = LL2
+        listToTakeFrom = LL1
+
+    add = listToAdd.head
+    take = listToTakeFrom.head
+
+    while add and take:
+        # if the data in the node in the listToAdd is greater than the listToTakeFrom
+            # the lists are out of order and we need to make the
+            # listToTakeFrom node point to the listToAdd node.
+            # we need to save the current next pointer of listToTakeFrom before we change it.
+        if add.data > take.data:
+            temp_node = take.next
+            take.next = add
+            take = temp_node
+            take = take.next
+        add = add.next
+
+        if not add.next:
+            listToAdd.tail = add
+
+    if take:
+        listToAdd.tail = take
+
+    return listToAdd
+
+combineLL(even, odd)
