@@ -32,6 +32,7 @@ class BTree:
                 last = curr
                 if curr.data < data:
                     curr = curr.right
+                # duplicates are allowed. (so not a binary search tree...)
                 elif curr.data > data or curr.data == data:
                     curr = curr.left
             if last.data < data:
@@ -137,6 +138,41 @@ class BTree:
 
         return recur(root.left) and recur(root.right)
 
+    # Given a binary tree containing numbers, find the maximum sum path
+    # (the path that has the largest sum of node values).
+    # The path may start and end at any node in the tree.
+    # SIMPLIFICATION: use print statements to check control flow.
+    def max_path(self):
+        def recur(node, sum):
+            if node:
+                if node.left and node.right:
+                    print("both nodes")
+                    if node.left.data > node.right.data:
+                        return recur(node.left, sum + node.data)
+                    else:
+                        return recur(node.right, sum + node.data)
+                elif node.left and not node.right:
+                        print("go left")
+                        return recur(node.left, sum + node.data)
+                elif not node.left and node.right:
+                        print("go right")
+                        return recur(node.right, sum + node.data)
+                elif not node.left and not node.right:
+                    print("return")
+                    return sum + node.data
+
+        return recur(self.root, 0)
+
+    # Given a binary search tree, reverse the order
+    # of its values by modifying the nodes’ links.
+    def switch_right_and_left(self, node):
+        if node:
+            self.switch_right_and_left(node.left)
+            self.switch_right_and_left(node.right)
+            node.left, node.right = node.right, node.left
+        else:
+            return
+
 
 
 # 'red', 'orange', 'yellow', 'green', 'blue', 'purple'
@@ -227,13 +263,20 @@ simplification:
 myTree = BTree()
 myTree.add(1)
 myTree.add(0)
+myTree.add(-1)
 myTree.add(2)
 myTree.add(3)
-myTree.add(-1)
-# print(myTree.inorder_traversal())
+myTree.add(10)
+myTree.add(8)
+print(myTree.inorder_traversal())
 # print(myTree.find_nodes_that_sum(5))
 # There's seems to be some issues... it doesn't work for all sums...
 # print(myTree.is_symmetrical)
+# print(myTree.max_path())
+myTree.switch_right_and_left(myTree.root)
+print(myTree.inorder_traversal())
+
+
 
 
 """
