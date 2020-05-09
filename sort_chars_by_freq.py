@@ -107,7 +107,8 @@ def sort__by_freq(word):
         # to the result array making sure to add the same number
         # of characters as that character's frequency (if that makes sense)
         while(val_lookup[val]):
-            result+=[val_lookup[val].pop()]*val
+            char = val_lookup[val].pop()
+            result += [ char ] * val
 
     #return the result array's items as a string
     return "".join(result)
