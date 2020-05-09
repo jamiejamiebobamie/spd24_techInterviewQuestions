@@ -199,6 +199,8 @@ odd.add(LLNode(3))
 odd.add(LLNode(5))
 odd.add(LLNode(7))
 odd.add(LLNode(9))
+odd.print_list()
+print()
 
 even = LL()
 even_head = LLNode(2)
@@ -207,7 +209,10 @@ even.add(LLNode(4))
 even.add(LLNode(6))
 even.add(LLNode(8))
 even.add(LLNode(10))
+even.print_list()
+print()
 
+# in progress...
 def combineLL(LL1, LL2):
 
     if LL1.head.data < LL2.head.data:
@@ -218,26 +223,41 @@ def combineLL(LL1, LL2):
         listToTakeFrom = LL1
 
     add = listToAdd.head
+    add_prev = listToAdd.head
     take = listToTakeFrom.head
 
-    while add and take:
+    while add.next and take:
         # if the data in the node in the listToAdd is greater than the listToTakeFrom
             # the lists are out of order and we need to make the
             # listToTakeFrom node point to the listToAdd node.
             # we need to save the current next pointer of listToTakeFrom before we change it.
+        # print(add.data, take.data)
         if add.data > take.data:
             temp_node = take.next
             take.next = add
+            if add != add_prev:
+                add_prev.next = take
+            else:
+                listToAdd.head = take
+            add_prev = take
             take = temp_node
+            # print(take.data)
             take = take.next
-        add = add.next
+        else:
+            add_prev = add
 
         if not add.next:
             listToAdd.tail = add
 
+        add = add.next
+
     if take:
+        # add_prev.next = take
         listToAdd.tail = take
 
     return listToAdd
 
-combineLL(even, odd)
+combined = combineLL(even, odd)
+
+combined.print_list()
+print()
