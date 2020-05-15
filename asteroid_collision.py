@@ -46,7 +46,6 @@ The length of asteroids will be at most 10000.
 Each asteroid will be a non-zero integer in the range [-1000, 1000]..
 
 """
-from collections import deque
 # this is wrong.
 def collision_uhoh(asteroid_array):
     is_still_colliding = True
@@ -73,62 +72,9 @@ def collision_uhoh(asteroid_array):
             i+=1
     return asteroid_array[:-index] if index != 0 else asteroid_array
 
-
-asteroids = [-2, -1, 1, 2] # [-2, -1, 1, 2]
-# asteroids = [8, -8] # []
-# asteroids = [5, 10, -5] # [5, 10]
-# print(collision_uhoh(asteroids))
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.next = None
-        self.last = None
-
-class Linkedlist:
-    def __init__(self,asteroids):
-        self.head = None
-        self.tail = None
-        for asteroid in asteroids:
-            self.add_node(asteroid)
-
-    def add_node(self, data):
-        new_node = Node(data)
-        if self.head == None:
-            self.head = new_node
-        elif self.tail == None:
-            self.tail = new_node
-            self.head.next = self.tail
-            self.tail.last = self.head
-        else:
-            new_node.last = self.tail
-            self.tail.next = new_node
-            self.tail = new_node
-
-    def replace_data(self, index, data):
-        count = 0
-        node = self.head
-        while node:
-            if count == index:
-                node.data = data
-                return True
-            node = node.next
-            count+=1
-        return False
-
-    def remove_node(self, index):
-        count = 0
-        node = self.head
-        while node:
-            if count == index:
-                node.last.next = node.next
-                node.next.last = node.last
-                return True
-            node = node.next
-            count+=1
-        return False
-
-asteroids = [10, 2, -5] # [10]
-
+# this works.
+# O(n) time complexity.
+# O(1) space.
 def collision(asteroid_array):
     # an array of asteroids that are on the left and moving right
     colliders = []
@@ -173,9 +119,13 @@ def collision(asteroid_array):
                     if len(colliders):
                         collider = colliders.pop()
                         collider_index = collider_index_array.pop()
-                print(collider,asteroid)
 
     return [asteroid for asteroid in asteroid_array if asteroid != None]
 
+
+asteroids = [-2, -1, 1, 2] # [-2, -1, 1, 2]
+asteroids = [8, -8] # []
+asteroids = [5, 10, -5] # [5, 10]
+asteroids = [10, 2, -5] # [10]
 
 print(collision(asteroids))
