@@ -44,7 +44,7 @@ pools. E.g.,  [4, 2, 3, 4] => 3,  [3, 5, 2, 3] => 1"""
 
 
 """
-
+# not working
 def city_rain(array):
     max_v = float("-inf")
     run = []
@@ -98,6 +98,7 @@ if we find number is less than or key
 store number as value
 
 """
+# not working
 def city_rain(array):
     max_v = float("-inf")
     run = {}

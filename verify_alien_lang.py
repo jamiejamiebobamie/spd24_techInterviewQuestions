@@ -49,7 +49,10 @@ Constraints:
 order.length == 26
 All characters in words[i] and order are English lowercase letters."""
 
-
+# m = the number of words in the 'words' array
+# n = the size of the largest word(?)
+# time complexity = O(m*n)
+# space complexity = O(m*n)
 def verify(words, order):
     # create a lookup dictionary that converts the characters in the language to
         # integers depending on their order in the language (starts at 0)

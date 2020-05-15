@@ -28,7 +28,7 @@ Explanation: s can be split into "RL", "RRRLL RLL", since each substring contain
 
 
 """
- # in progress...
+# in progress...  not working
 def return_max_balanced_groups(string):
     test = []
     curr = None

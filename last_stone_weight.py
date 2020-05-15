@@ -21,6 +21,7 @@ we combine 1 and 1 to get 0 so the array converts to [1] then that's the value o
 """
 
 # O(n**2 runtime due to pop_biggest_stone method iterating through the list each time...)
+# I should use a max_heap in the future for O(nlogn) time complexity
 def last_stone_weight(arr):
     while len(arr) != 1:
         biggest_stone = pop_biggest_stone(arr)

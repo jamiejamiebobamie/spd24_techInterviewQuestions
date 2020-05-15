@@ -12,7 +12,7 @@ assumptions:
         children nodes with a real value.
 
 """
-
+# no bsts were harmed in the making of this solution.
 def is_valid(array_of_node_values):
     # iterate through the input array
     for i, node_value in enumerate(array_of_node_values):
