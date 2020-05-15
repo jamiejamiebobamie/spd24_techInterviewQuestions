@@ -46,31 +46,6 @@ The length of asteroids will be at most 10000.
 Each asteroid will be a non-zero integer in the range [-1000, 1000]..
 
 """
-# this is wrong.
-def collision_uhoh(asteroid_array):
-    is_still_colliding = True
-    index = 0
-    while (is_still_colliding):
-        is_still_colliding = False
-        i = index
-        while i < len(asteroid_array):
-            if i != len(asteroid_array) - 1:
-                # check if the two asteroids will collide by looking to see
-                    # if the they have different signs.
-                if asteroid_array[i] > 0 and asteroid_array[i+1] < 0:
-                    if abs(asteroid_array[i]) ==  abs(asteroid_array[i+1]):
-                        index+=2
-                    else:
-                        collision = max(asteroid_array[i], asteroid_array[i+1])
-                        # if they do compute their difference and add the new element
-                            # as the second element that was compared so that
-                            # it can interact with the remaining asteroid of the array
-                        asteroid_array[i+1] = abs(collision)
-                        index+=1
-                        # set collision to true to show that collisions are still happening.
-                        is_still_colliding = True
-            i+=1
-    return asteroid_array[:-index] if index != 0 else asteroid_array
 
 # this works.
 # O(n) time complexity.
@@ -106,7 +81,7 @@ def collision(asteroid_array):
                     collider = None
                     asteroid = None
                 # if the right side asteroid is larger.
-                    # set the asteroid to None
+                    # set the (left) asteroid to None
                 elif abs(collider) > abs(asteroid):
                     asteroid_array[i] = None
                     asteroid = None
@@ -116,7 +91,7 @@ def collision(asteroid_array):
                 else:
                     asteroid_array[collider_index] = None
                     collider = None
-                    if len(colliders):
+                    if colliders:
                         collider = colliders.pop()
                         collider_index = collider_index_array.pop()
 
@@ -126,6 +101,6 @@ def collision(asteroid_array):
 asteroids = [-2, -1, 1, 2] # [-2, -1, 1, 2]
 asteroids = [8, -8] # []
 asteroids = [5, 10, -5] # [5, 10]
-asteroids = [10, 2, -5] # [10]
+# asteroids = [10, 2, -5] # [10]
 
 print(collision(asteroids))
