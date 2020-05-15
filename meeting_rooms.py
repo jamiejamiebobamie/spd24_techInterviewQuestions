@@ -17,8 +17,6 @@ def min_rooms(meeting_times):
     last_meeting_time_end = 0
     for start,end in meeting_times:
         last_meeting_time_end = max(last_meeting_time_end, end)
-        # in case of meetings with duplicate start times,
-        # create a start time key with array of end times as the values.
         if start not in starting_times:
             starting_times[start] = [end]
         else:
@@ -29,10 +27,8 @@ def min_rooms(meeting_times):
     most_rooms = 0
     # iterate through all of the minutes from now until the conclusion of the last meeting.
     for minute in range(last_meeting_time_end+1):
-        # compute the sum of all the ending_times.values()
-        # (the sum of all of the array lengths)
-        # as this signifies the total #
-        # of meetings in progress.
+        # compute the sum of all of the array lengths of the ending_times.values()
+        # as this signifies the total # of meetings in progress.
         sum = 0
         for values in ending_times.values():
             sum+=len(values)
@@ -47,8 +43,8 @@ def min_rooms(meeting_times):
             if minute in ending_times:
                 del ending_times[minute]
         # finally check if the current minute is in the meeting times
-        # 'time_lookup' dictionary and if it is at the endingtime to the
-        # ending_times array to begin the meeting.
+        # 'starting_times' dictionary and if it is, add the end_time to the
+        # ending_times dict to begin the meeting.
         if minute in starting_times:
             meeting_end_times_for_that_start_time = starting_times[minute]
             for end_time in meeting_end_times_for_that_start_time:
