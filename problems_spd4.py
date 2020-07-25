@@ -8,6 +8,8 @@ leaf nodes.
 Compare your diagram to 2 other students’ diagrams. Are your structures identical?
 """
 
+from collections import deque
+
 class BN:
     def __init__(self, data=None, left=None, right=None):
         self.data = data
@@ -173,6 +175,61 @@ class BTree:
             return
 
 
+    """    tree:
+                                    1
+                            0               2
+                    -3                             3
+                -4      -1                             5
+                                                    4
+    """
+
+
+    def spiral_order(self):
+        def level_order_traversal(reverse):
+            if len(queue):
+                node = queue.popleft()
+                if reverse:
+                    arr = reverse_level_order
+                    if node.right:
+                        queue.append(node.right)
+                    if node.left:
+                        queue.append(node.left)
+                else:
+                    arr = normal_level_order
+                    if node.left:
+                        queue.append(node.left)
+                    if node.right:
+                        queue.append(node.right)
+                arr.append(node.data)
+                level_order_traversal(reverse)
+            return
+
+        normal_level_order = []
+        reverse_level_order = []
+        queue = deque() # nodes
+        queue.append(self.root)
+        level_order_traversal(False)
+        queue = deque() # nodes
+        queue.append(self.root)
+        level_order_traversal(True)
+
+        level = 1
+        solution = []
+        store_end = self.root.data
+        curr_arr = reverse_level_order
+        for i in range(len(curr_arr)):
+            solution.append(curr_arr[i])
+            if curr_arr[i] == store_end:
+                if i < len(curr_arr)-2:
+                    if level%2:
+                        store_end = normal_level_order[i+1]
+                        curr_arr = reverse_level_order
+                    else:
+                        store_end = reverse_level_order[i+1]
+                        curr_arr = normal_level_order
+                level+=1
+        return solution
+
 
 # 'red', 'orange', 'yellow', 'green', 'blue', 'purple'
 
@@ -245,8 +302,9 @@ example:
             tree:
                                     1
                             0               2
-                    -1                             3
-
+                    -3                             3
+                -4      -1                             5
+                                                    4
             n = 0
 
 assumptions:
@@ -262,18 +320,23 @@ simplification:
 myTree = BTree()
 myTree.add(1)
 myTree.add(0)
-myTree.add(-1)
 myTree.add(2)
 myTree.add(3)
-myTree.add(10)
-myTree.add(8)
-print(myTree.inorder_traversal())
+
+myTree.add(5)
+myTree.add(4)
+myTree.add(-3)
+myTree.add(-4)
+myTree.add(-1)
+# print(myTree.inorder_traversal())
 # print(myTree.find_nodes_that_sum(5))
 # There's seems to be some issues... it doesn't work for all sums...
 # print(myTree.is_symmetrical)
 # print(myTree.max_path())
-myTree.switch_right_and_left(myTree.root)
-print(myTree.inorder_traversal())
+# myTree.switch_right_and_left(myTree.root)
+# print(myTree.inorder_traversal())
+
+print(myTree.spiral_order())
 
 
 
@@ -345,11 +408,11 @@ set 3's.left pointer to it's parent
 """
 
 
-myTree = BTree()
-myTree.add(5)
-myTree.add(7)
-myTree.add(4)
-myTree.add(6)
+# myTree = BTree()
+# myTree.add(5)
+# myTree.add(7)
+# myTree.add(4)
+# myTree.add(6)
 """
 HAVE:
                 5
@@ -365,20 +428,20 @@ WANT:
 # print(myTree.root.right.data)
 
 
-myTree = BTree()
-myTree.add('red')
+# myTree = BTree()
+# myTree.add('red')
+# # print(myTree.inorder_traversal())
+# myTree.add('orange')
+# # print(myTree.inorder_traversal())
+# myTree.add('yellow')
+# myTree.add('green')
+# myTree.add('blue')
+# myTree.add('purple')
 # print(myTree.inorder_traversal())
-myTree.add('orange')
-# print(myTree.inorder_traversal())
-myTree.add('yellow')
-myTree.add('green')
-myTree.add('blue')
-myTree.add('purple')
-print(myTree.inorder_traversal())
-
-head = myTree.turn_into_sorted_LL()
-
-node = head
-while node:
-    print(node.data)
-    node = node.right
+#
+# head = myTree.turn_into_sorted_LL()
+#
+# node = head
+# while node:
+#     print(node.data)
+#     node = node.right
